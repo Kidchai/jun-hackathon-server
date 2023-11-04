@@ -3,10 +3,9 @@ package jun.hackathon.server.controllers;
 import jun.hackathon.server.models.User;
 import jun.hackathon.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/register")
@@ -20,7 +19,7 @@ public class RegistrationController {
     }
 
     @PostMapping()
-    public User register(@RequestBody User user) {
-        return userRepo.save(user);
+    public ResponseEntity<User> register(@RequestBody User user) {
+        return new ResponseEntity<>(userRepo.save(user), HttpStatus.OK);
     }
 }
