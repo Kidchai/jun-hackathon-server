@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/keys/jwtRS256.key
+/keys/jwtRS256.key.pub
