@@ -10,8 +10,8 @@
 **1. Склонируйте репозиторий и перейдите в корневую папку проекта.**
 
 ```
-$ git clone https://github.com/Kidchai/chicago-plays.git
-$ cd chicago-plays
+$ git clone https://github.com/Kidchai/jun-hackathon-server
+$ cd jun-hackathon-server
 ```
 
 **2. Запустите сервер с помощью Docker.**
