@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
@@ -42,6 +43,7 @@ public class AuthenticationController {
         try {
             signer = RSASigner.newSHA256Signer(new String(Files.readAllBytes(Paths.get("keys/jwtRS256.key"))));
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>("Error", HttpStatus.FORBIDDEN);
         }
 
