@@ -34,11 +34,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            if [ ! -d "/home/backend" ]; then
-              mkdir -p /home/backend
-            fi
+            mkdir -p /home/backend
             cd /home/backend
             docker-compose down
             sed 's/%%%IMAGE_NUMBER%%%/${{ github.run_number }}/' docker-compose.template.yml > docker-compose.yml
-            cd /home/backend
-            docker-compose up
+            docker-compose up -d
