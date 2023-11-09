@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-    
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -26,3 +26,19 @@ jobs:
         with:
           push: true
           tags: kidchai/jun-hackathon-server:latest, kidchai/jun-hackathon-server:${{ github.run_number }}
+
+      - name: Connect to Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            if [ ! -d "/home/backend" ]; then
+              mkdir -p /home/backend
+            fi
+            cd /home/backend
+            docker-compose down
+            sed 's/%%%IMAGE_NUMBER%%%/${{ github.run_number }}/' docker-compose.template.yml > docker-compose.yml
+            cd /home/backend
+            docker-compose up
