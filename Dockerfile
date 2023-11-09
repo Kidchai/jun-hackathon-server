@@ -4,7 +4,7 @@ COPY pom.xml .
 COPY src src
 RUN mvn install -Dmaven.test.skip=true
 
-FROM eclipse-temurin:8-alpine
+FROM eclipse-temurin:17-alpine
 WORKDIR /app
 COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar /app/app.jar
 EXPOSE 8080
