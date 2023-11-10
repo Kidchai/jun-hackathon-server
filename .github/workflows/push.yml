@@ -15,7 +15,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: lionzxy
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
@@ -24,13 +24,13 @@ jobs:
         with:
           push: true
           platforms: linux/amd64
-          tags: kidchai/jun-hackathon-server:latest, kidchai/jun-hackathon-server:${{ github.run_number }}
+          tags: lionzxy/charity-backend:latest, lionzxy/charity-backend:${{ github.run_number }}
 
       - name: Connect to Server
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
+          host: charity.kulikov.uk
+          username: root
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             mkdir -p /home/backend
