@@ -22,7 +22,7 @@ $ docker-compose up
 
 ### Документация для API
 
-Будет доступна после запуска по адресу
+Будет доступна после запуска по адресу (profile-controller)
 
 ```
 http://server:8080/swagger-ui/index.html
@@ -31,3 +31,5 @@ server: имя сервера или IP
 
 Для локального запуска, например:
 http://localhost:8080/swagger-ui/index.html
+
+Не используйте эндпойнты для `profile-controller` и `user-entity-controller`.
