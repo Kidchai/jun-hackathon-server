@@ -29,4 +29,9 @@ public class ImageStorage {
         ImageIO.write(image, formatName, outputFile);
         return outputFile.getAbsolutePath();
     }
+
+    public BufferedImage getImage(String path) throws Exception {
+        File inputFile = rootLocation.resolve(path).toFile();
+        return ImageIO.read(inputFile);
+    }
 }

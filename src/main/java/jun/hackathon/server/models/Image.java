@@ -15,5 +15,6 @@ public class Image {
     private Long id;
 
     private String imageId;
+    private String imageFormat;
     private String path;
 }

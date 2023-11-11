@@ -1,6 +1,7 @@
 package jun.hackathon.server.controllers;
 
 import jun.hackathon.server.services.GalleryService;
+import jun.hackathon.server.util.exceptions.ImageNotFoundException;
 import jun.hackathon.server.util.exceptions.UnsupportedFileTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/gallery")
@@ -35,6 +34,22 @@ public class GalleryController {
             map.put("reason", e.getMessage());
             return new ResponseEntity<>(map, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         } catch (IOException e) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("reason", e.getMessage());
+            map.put("stack", e.getStackTrace());
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/image")
+    public ResponseEntity<?> getImage(@RequestParam("imageid") String imageId) {
+        try {
+            return galleryService.getImage(imageId);
+        } catch (ImageNotFoundException e) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("reason", e.getMessage());
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
             Map<String, Object> map = new HashMap<>();
             map.put("reason", e.getMessage());
             map.put("stack", e.getStackTrace());
