@@ -14,8 +14,7 @@ import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class GalleryService {
@@ -66,5 +65,22 @@ public class GalleryService {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(mimeType))
                 .body(imageBytes);
+    }
+
+
+    public List<String> getAllImages() throws Exception {
+        List<Image> images = imageRepository.findAll();
+        List<String> imageBase64List = new ArrayList<>();
+
+        for (Image imageEntity : images) {
+            BufferedImage img = imageStorage.getImage(imageEntity.getPath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(img, imageEntity.getImageFormat(), baos);
+            byte[] imageBytes = baos.toByteArray();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            imageBase64List.add(base64Image);
+        }
+
+        return imageBase64List;
     }
 }

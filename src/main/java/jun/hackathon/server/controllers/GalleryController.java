@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -55,5 +56,11 @@ public class GalleryController {
             map.put("stack", e.getStackTrace());
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<String>> getAllImages() throws Exception {
+        List<String> images = galleryService.getAllImages();
+        return ResponseEntity.ok(images);
     }
 }
