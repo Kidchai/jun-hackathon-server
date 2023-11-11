@@ -1,5 +1,7 @@
 ## Серверная часть приложения для благотворительного хакатона
 
+Это back-end команды #7. Полная информация о проекте доступна в [README организации](https://github.com/Junior-Hackathon-Charity-2023/.github/blob/main/profile/README.md)
+
 ### Как запустить локально?
 
 **Вам понадобится:**
@@ -22,7 +24,7 @@ $ docker-compose up
 
 ### Документация для API
 
-Будет доступна после запуска по адресу (profile-controller)
+Будет доступна после запуска по адресу
 
 ```
 http://server:8080/swagger-ui/index.html
@@ -31,5 +33,3 @@ server: имя сервера или IP
 
 Для локального запуска, например:
 http://localhost:8080/swagger-ui/index.html
-
-Не используйте эндпойнты для `profile-controller` и `user-entity-controller`.
