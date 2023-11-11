@@ -1,17 +1,16 @@
 package jun.hackathon.server.controllers;
 
 import jun.hackathon.server.services.GalleryService;
+import jun.hackathon.server.util.exceptions.UnsupportedFileTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -29,12 +28,17 @@ public class GalleryController {
         try {
             String imageId = galleryService.uploadImage(file);
             Map<String, String> response = new HashMap<>();
-            response.put("imageId", imageId);
+            response.put("imageid", imageId);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (TypeNotPresentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (UnsupportedFileTypeException e) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("reason", e.getMessage());
+            return new ResponseEntity<>(map, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            Map<String, Object> map = new HashMap<>();
+            map.put("reason", e.getMessage());
+            map.put("stack", e.getStackTrace());
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 }

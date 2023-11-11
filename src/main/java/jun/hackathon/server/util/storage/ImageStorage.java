@@ -1,4 +1,4 @@
-package jun.hackathon.server.storage;
+package jun.hackathon.server.util.storage;
 
 import org.springframework.stereotype.Component;
 
@@ -24,9 +24,9 @@ public class ImageStorage {
         }
     }
 
-    public String addImage(BufferedImage image, String filename) throws IOException {
+    public String addImage(BufferedImage image, String filename, String formatName) throws IOException {
         File outputFile = rootLocation.resolve(filename).toFile();
-        ImageIO.write(image, "png", outputFile);
+        ImageIO.write(image, formatName, outputFile);
         return outputFile.getAbsolutePath();
     }
 }
